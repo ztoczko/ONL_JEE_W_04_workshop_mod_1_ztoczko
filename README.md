@@ -1,0 +1,2 @@
+# ONL_JEE_W_04_workshop_mod_1_ztoczko
+Symulator menedżera procesów
