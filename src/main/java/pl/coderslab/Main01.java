@@ -33,7 +33,7 @@ public class Main01 {
         boolean quitCheck = false;
         File sourceFile = new File(sourceFileName);
 
-        //Weryfikacja, czy tasks.csv istnieje, monit użytkownika o jego utworzenie, jeżeli nie istnieje
+        //Weryfikacja, czy tasks.csv istnieje, monit użytkownika o jego utworzenie jeżeli nie istnieje
 
         if (!sourceFile.exists()) {
             boolean choiceMade = false;
