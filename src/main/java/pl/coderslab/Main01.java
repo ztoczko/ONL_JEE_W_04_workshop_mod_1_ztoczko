@@ -16,6 +16,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 public class Main01 {
 
     static Scanner userInput = new Scanner(System.in);
+    static boolean isWindows = false;
 
     public static void main(String[] args) {
 
@@ -32,6 +33,11 @@ public class Main01 {
 
         boolean quitCheck = false;
         File sourceFile = new File(sourceFileName);
+
+        if (System.getProperty("os.name").toLowerCase().contains("windows")){
+            System.out.println("Windows system detected, console colors will not be loaded");
+            isWindows = true;
+        };
 
         //Weryfikacja, czy tasks.csv istnieje, monit użytkownika o jego utworzenie jeżeli nie istnieje
 
@@ -93,12 +99,12 @@ public class Main01 {
                 quitCheck = true;
             }
 
-            if (errorLineCounter > 0) {
+            if (errorLineCounter > 0 && !quitCheck) {
                 boolean choiceMade = false;
 
                 while (!choiceMade) {
-                    System.out.println("Application encountered errors in " + errorLineCounter + ((errorLineCounter > 1) ? "lines" : "line"));
-                    System.out.println("Do you want to remove them and launch application?");
+                    System.out.println("Application encountered errors in " + errorLineCounter + ((errorLineCounter > 1) ? " lines" : " line"));
+                    System.out.println("Do you want to remove invalid lines and launch application?");
                     System.out.println(formatCommand(commandYes) + "/" + formatCommand(commandNo));
                     String[] permittedCommands = {commandYes, commandNo};
 
@@ -127,7 +133,7 @@ public class Main01 {
         //podstawowe menu programu
 
         while (!quitCheck) {
-            System.out.println(ConsoleColors.BLUE + "Please select an option:" + ConsoleColors.RESET);
+            System.out.println((isWindows ? "" : ConsoleColors.BLUE) + "Please select an option:" + (isWindows ? "" : ConsoleColors.RESET));
             System.out.println(formatCommand(commandList));
             System.out.println(formatCommand(commandAdd));
             System.out.println(formatCommand(commandRemove));
@@ -166,7 +172,7 @@ public class Main01 {
         }
         userInput.close();
 
-        System.out.println(ConsoleColors.RED + "Application is shutting down\nGoodbye!" + ConsoleColors.RESET);
+        System.out.println((isWindows ? "" : ConsoleColors.RED) + "Application is shutting down\nGoodbye!" + (isWindows ? "" : ConsoleColors.RED));
 
 
     }
@@ -438,7 +444,7 @@ public class Main01 {
 
     //metoda formatująca wyświetlane komendy
     static public String formatCommand(String command) {
-        return (ConsoleColors.YELLOW_UNDERLINED + command.substring(0, 1).toUpperCase() + ((command.length() > 1) ? (ConsoleColors.YELLOW + command.substring(1).toLowerCase()) : "") + ConsoleColors.RESET);
+        return ((isWindows ? "" : ConsoleColors.YELLOW_UNDERLINED) + command.substring(0, 1).toUpperCase() + ((command.length() > 1) ? ((isWindows ? "" : ConsoleColors.YELLOW) + command.substring(1).toLowerCase()) : "") + (isWindows ? "" : ConsoleColors.RESET));
     }
 
 
